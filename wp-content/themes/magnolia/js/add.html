@@ -1,0 +1,52 @@
+
+$.simpleWeather({
+    location: 'Florence, Italy',
+    woeid: '',
+    unit: 'c',
+    success: function(weather) {
+      html = '<h4><i class="weathericon-'+weather.code+'"></i> '+weather.temp+'&deg;'+weather.units.temp+'</h4>';
+      html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
+      html += '<li class="currently">'+weather.currently+'</li>';
+      html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
+	  
+	   for(var i=0;i<weather.forecast.length;i++) {
+        html += '<span class="details_forecast">'+weather.forecast[i].day+': '+weather.forecast[i].high+'</span>';
+      }
+  
+      $("#weather").html(html);
+    },
+    error: function(error) {
+      $("#weather").html('<p>'+error+'</p>');
+    }
+  });
+
+  
+
+$('#modal-contacts-open').on('click', function(e) {
+			var mod = $('#main'),
+				modal = $('#modal-contacts');
+ 				mod.animate({ opacity: 0 }, 400, function(){
+				$('html,body').scrollTop(0);
+				modal.addClass('modal-active').fadeIn(400);
+					//set up markers 
+		var myMarkers = {"markers": [
+				{"latitude": "51.511732", "longitude":"-0.123270", "icon": "http://shtheme.net/demosd/magnolia/wp-content/uploads/2016/03/map-marker2.png"}
+			]
+		};
+		
+		//set up map options
+		$("#map").mapmarker({
+			zoom	: 14,
+			center	: 'Covent Garden London',
+			markers	: myMarkers
+		});
+			});
+			e.preventDefault();
+	
+			$('.modal-close').on('click', function(e) {
+				modal.removeClass('modal-active').fadeOut(400, function(){
+					mod.animate({ opacity: 1 }, 400);
+				});
+				e.preventDefault();
+			});
+		});
